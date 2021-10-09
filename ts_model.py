@@ -1,7 +1,6 @@
 # CHH Yang et al. 2021 (http://proceedings.mlr.press/v139/yang21j/yang21j.pdf)
 # Apache Apache-2.0 License
 import sys
-sys.path.append("..")
 
 import numpy as np
 
@@ -20,7 +19,7 @@ from tensorflow import keras
 
 print("tensorflow vr. ", tf.__version__, "kapre vr. ",kapre.__version__)
 
-def AttRNN_Model(baseline=False, load_pr=False):
+def AttRNN_Model():
 
     nCategs=36
     sr=16000
@@ -29,7 +28,7 @@ def AttRNN_Model(baseline=False, load_pr=False):
     model = AttRNNSpeechModel(nCategs, samplingrate = sr, inputLength = None)
     model.compile(optimizer='adam', loss=['sparse_categorical_crossentropy'], metrics=['sparse_categorical_accuracy'])
 
-    model.load_weights('/home/dodohow1011/SpeechAdvReprogram/weight/pr_attRNN.h5')
+    model.load_weights('weight/pr_attRNN.h5')
 
     return model
 
@@ -53,7 +52,6 @@ class ARTLayer(Layer):
 
     def call(self, x, dropout=0.4, training=True):
         prog = Dropout(dropout)(self.W, training=training) # remove K.tanh
-        # prog = K.tanh(self.W)
         out = x + prog
         return out
 
@@ -62,21 +60,14 @@ class ARTLayer(Layer):
 
 
 # White Adversairal Reprogramming Time Series (WART) Model 
-def WARTmodel(input_shape, pr_model, baseline, source_classes, mapping_num, target_classes, dropout=0.5):
+def WARTmodel(input_shape, pr_model, source_classes, mapping_num, target_classes, dropout=0.5):
     x = Input(shape=input_shape)
-    if baseline:
-        out = x
-    else:
-        out = ARTLayer()(x,dropout)
+    out = ARTLayer()(x,dropout)
     out = Reshape([16000,])(out)
     probs = pr_model(out) 
     
-    if baseline:
-        map_probs = Dense(target_classes, activation="softmax")(probs)
-    else:
-        map_probs = multi_mapping(probs, source_classes, mapping_num, target_classes)
+    map_probs = multi_mapping(probs, source_classes, mapping_num, target_classes)
     model = Model(inputs=x, outputs= map_probs)
-    model.layers[-7].trainable=False
 
     return model
 

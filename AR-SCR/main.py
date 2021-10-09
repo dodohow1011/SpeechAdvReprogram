@@ -1,33 +1,31 @@
+import os
 import sys
-sys.path.append("..")
+sys.path.append(os.getcwd())
+
 import argparse
 
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
-from sklearn.utils import class_weight
 import tensorflow.keras.backend as K
 
-
-from funcs import LR_Warmup, EarlyStopping
-from ts_dataloader import load_data, DataGenerator
-from ts_model import AttRNN_Model, ARTLayer, WARTmodel, make_model
-# from vggish.model import Vggish_Model
-
+from funcs import EarlyStopping
+from ts_dataloader import load_data
+from SpeechAdvReprogram.ts_model import AttRNN_Model, ARTLayer, WARTmodel, make_model
 
 # Learning phase is set to 0 since we want the network to use the pretrained moving mean/var
 # K.clear_session()
 
-def main(args, trial, rnd, seed):
+def main(args):
 
-    train_csv = '/home/dodohow1011/Voice2Series/Datasets/AR-SpeechCommands/train_full.csv'
-    dev_csv = '/home/dodohow1011/Voice2Series/Datasets/AR-SpeechCommands/dev_full.csv'
-    test_csv = '/home/dodohow1011/Voice2Series/Datasets/AR-SpeechCommands/test_full.csv'
+    train_csv = 'Datasets/AR-SCR/train_full.csv'
+    dev_csv = 'Datasets/AR-SCR/dev_full.csv'
+    test_csv = 'Datasets/AR-SCR/test_full.csv'
 
 
-    x_train, y_train = load_data(train_csv, rnd)
-    x_dev, y_dev = load_data(dev_csv, rnd)
-    x_test, y_test = load_data(test_csv, rnd)
+    x_train, y_train = load_data(train_csv)
+    x_dev, y_dev = load_data(dev_csv)
+    x_test, y_test = load_data(test_csv)
 
     classes = np.unique(y_train)
     cls2label = {label: i for i, label in enumerate(classes.tolist())}
@@ -45,14 +43,11 @@ def main(args, trial, rnd, seed):
 
 
     ## Pre-trained Model for Adv Program  
-    pr_model = AttRNN_Model(args.baseline, args.load_pr)
+    pr_model = AttRNN_Model()
 
 
     ## # of Source classes in Pre-trained Model
-    if args.net == 0: ## choose pre-trained network 
-        source_classes = 36 ## Google Speech Commands
-    else:
-        source_classes = 512 ## VGGish
+    source_classes = 36 ## Google Speech Commands
 
     target_shape = (x_train[0].shape[0], 1)
 
@@ -64,22 +59,17 @@ def main(args, trial, rnd, seed):
         print("Error: The mapping num should be smaller than source_classes / num_classes: {}".format(source_classes//num_classes)) 
         exit(1)
 
-    model = WARTmodel(target_shape, pr_model, args.baseline, source_classes, mapping_num, num_classes, seed, args.dropout)
+    model = WARTmodel(target_shape, pr_model, source_classes, mapping_num, num_classes, args.dropout)
 
     ## Loss
-    adam = tf.keras.optimizers.Adam(lr=0.001)
+    adam = tf.keras.optimizers.Adam(lr=args.lr)
     model.compile(loss='categorical_crossentropy', optimizer = adam, metrics=['accuracy'])
+        
+    ## Checkpoints
+    save_path = "AR-SCR/weight/" + str(args.lr) + "-{epoch:02d}-{val_accuracy:.4f}.h5"
+    if not os.path.exists('AR-SCR/weight'):
+        os.makedirs('AR-SCR/weight')
 
-    
-    if args.baseline:
-        if args.load_pr:
-            save_path = "weight/transfer/" + str(args.lr) + "-trials" + str(t) + "-{epoch:02d}-{val_accuracy:.4f}.h5"
-        else:
-            save_path = "weight/baseline/" + str(args.lr) + "-trials" + str(t) + "-{epoch:02d}-{val_accuracy:.4f}.h5"
-    else:
-        save_path = "weight/repr/" + str(args.lr) + "-trials" + str(t) + "-{epoch:02d}-{val_accuracy:.4f}.h5"
-
-            
     checkpoints = tf.keras.callbacks.ModelCheckpoint(save_path,save_weights_only=True)
     earlystop = EarlyStopping(monitor='val_loss', patience=10, start_epoch=50, restore_best_weights=True)
     exp_callback = [earlystop, checkpoints]
@@ -107,25 +97,4 @@ if __name__ == '__main__':
     parser.add_argument("--lr", type=float, default=0.001, help="Initial learning rate")
     args = parser.parse_args()
     
-    acc = list()
-    trials = 10
-    seeds = [824, 1011, 719, 129, 1109, 117, 9487, 666, 1008, 848]
-    for t in range(trials):
-        seed = seeds[t]
-        tf.random.set_seed(seed)
-        rnd = np.random.RandomState(seed=seed)
-        score = main(args, t, rnd, seed)
-        acc.append(score[1])
-
-    avg = sum(acc) / trials
-    with open("exp/Accuracy", "a") as f:
-        if args.baseline:
-            if args.load_pr:
-                f.write("transfer ")
-            f.write("baseline ")
-        f.write("dropout {}, lr {} Acc ".format(args.dropout, args.lr))
-        for a in acc:
-            f.write("{:.3f}, ".format(a))
-        f.write("Avg: {:.3f}".format(avg))
-        f.write("\n")
-
+    main(args)

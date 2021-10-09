@@ -34,6 +34,10 @@ def AttRNNSpeechModel(nCategories, samplingrate=16000,
     # we would rather have it the other way around for LSTMs
 
     x = L.Permute((2, 1, 3))(x)
+    x = L.Conv2D(10, (5, 1), activation='relu', padding='same')(x)
+    x = L.BatchNormalization()(x)
+    x = L.Conv2D(1, (5, 1), activation='relu', padding='same')(x)
+    x = L.BatchNormalization()(x)
 
     # x = Reshape((125, 80)) (x)
     # keras.backend.squeeze(x, axis)

@@ -1,3 +1,6 @@
+import sys
+sys.path.append('..')
+
 import librosa
 import numpy as np
 import pandas as pd
@@ -6,7 +9,7 @@ import soundfile as sound
 from tensorflow import keras
 
 
-def load_data(data_csv, is_noise=False):
+def load_data(data_csv):
     data_df = pd.read_csv(data_csv, sep='\t')   
     wavpath = data_df['filename'].tolist()
     labels = data_df['label'].to_list()
@@ -15,8 +18,7 @@ def load_data(data_csv, is_noise=False):
     
     for wav, label in zip(wavpath, labels):
         stereo, sr = sound.read(wav)
-        if not is_noise:
-            stereo = stereo / np.abs(stereo).max()
+        stereo = stereo / np.abs(stereo).max()
         if sr != 16000:
             stereo = librosa.resample(stereo, sr, 16000)
         if stereo.shape[0] > 16000:

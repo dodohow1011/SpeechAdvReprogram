@@ -1,13 +1,5 @@
 ## Adversarial Reprogramming on Speech Command Recognition
 
-
-<img src="https://github.com/huckiyang/Voice2Series-Reprogramming/blob/main/img/layers.png" width="750">
-
-
-- We provide an end-to-end approach (Repro. layer) to reprogram on time series data on `raw waveform` with a differential mel-spectrogram layer from kapre. 
-
-- No offiline acoustic feature extraction and all layers are differentiable.
-
 ### Environment
 
 
@@ -42,24 +34,26 @@ Dysarthric Speech Commands dataset
 - Please download the Lithuanian Speech Commands dataset [here](https://reurl.cc/a5vAG4).
 
 
-```python
-python make_data.py
+```shell
+./prepare_ar_data.sh
+./prepare_lt_data.sh
+./prepare_dm_data.sh
 ```
 
 ### Training
 
-Examples:
-
-```python
-python v2s_main.py
+```shell
+./run_ar.sh
+./run_lt.sh
+./run_dm.sh
 ```
 
-For more details please refer to [AR-SCR](https://github.com/dodohow1011/Low-Resouce-Acoustic-Classification/blob/main/AR-SpeechCommands/v2s_main.py) and [LT-SCR](https://github.com/dodohow1011/Low-Resource-Acoustic-Classification/blob/main/LT-SpeechCommands/v2s_main.py).
+For more details please refer to [AR-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/AR-SCR/v2s_main.py), [LT-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/LT-SCR/v2s_main.py) and [AR-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/DM-SCR/v2s_main.py)
 
 
 ### Reference
 
-- A STUDY OF LOW-RESOURCE SPEECH COMMANDS RECOGNITION BASED ON ADVERSARIAL REPROGRAMMING
+- A Study of Low-Resource Speech Commands Recognition Based on Adversarial Reprogramming
 
 - Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 
