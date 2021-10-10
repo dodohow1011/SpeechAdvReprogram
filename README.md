@@ -8,7 +8,8 @@ Tensorflow 2.2 (CUDA=10.0) and Kapre 0.2.0.
 - option 1 (from yml)
 
 ```shell
-conda env create -f V2S.yml
+conda env create -f repr-scr.yml
+source activate repr-scr
 ```
 
 - option 2 (from clean python 3.6)
@@ -47,13 +48,15 @@ Dysarthric Speech Commands dataset
 
 ### Training
 
+For training and evaluating the three speech command recognition results.
+
 ```shell
 ./run_ar.sh
 ./run_lt.sh
 ./run_dm.sh
 ```
 
-For more details please refer to [AR-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/AR-SCR/v2s_main.py), [LT-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/LT-SCR/v2s_main.py) and [DM-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/DM-SCR/v2s_main.py)
+For more details please refer to [AR-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/AR-SCR/main.py), [LT-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/LT-SCR/main.py) and [DM-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/DM-SCR/main.py)
 
 
 ### Reference

@@ -85,15 +85,12 @@ class DataGenerator(keras.utils.Sequence):
                 silence = self.bg_audio[sil]
                 self.datas.append((silence, "silence"))
         """
-        c = 0
-        u = 0
         for _ in range(self.batch_size*7):
             coin = self.rnd.random()
             if coin < 0.1:
                 unk = self.rnd.choice(len(self.unknowns))
                 unknown = self.unknowns[unk]
                 self.datas.append(unknown)
-                u += 1
             elif coin < 0.15:
                 sil = self.rnd.choice(len(self.bg_audio))
                 silence = self.bg_audio[sil]
@@ -102,10 +99,7 @@ class DataGenerator(keras.utils.Sequence):
                 com = self.rnd.choice(len(self.commands))
                 command = self.commands[com]
                 self.datas.append(command)
-                c += 1
     
-        print ("{} {} ".format(c,u))
-        
         self.indexes = np.arange(len(self.datas))
         if self.shuffle == True:
             self.rnd.shuffle(self.indexes)
