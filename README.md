@@ -25,18 +25,23 @@ Arabic Speech Commands dataset
 
 - Please download the Arabic Speech Commands dataset [here](https://github.com/ltkbenamer/AR_Speech_Database.git).
 
+```shell
+./prepare_ar_data.sh
+```
+
 Lithuanian Speech Commands dataset
 
 - Please download the Lithuanian Speech Commands dataset [here](https://github.com/kolesov93/lt_speech_commands).
+
+```shell
+./prepare_lt_data.sh
+```
 
 Dysarthric Speech Commands dataset
 
 - Please download the Lithuanian Speech Commands dataset [here](https://reurl.cc/a5vAG4).
 
-
 ```shell
-./prepare_ar_data.sh
-./prepare_lt_data.sh
 ./prepare_dm_data.sh
 ```
 
@@ -48,7 +53,7 @@ Dysarthric Speech Commands dataset
 ./run_dm.sh
 ```
 
-For more details please refer to [AR-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/AR-SCR/v2s_main.py), [LT-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/LT-SCR/v2s_main.py) and [AR-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/DM-SCR/v2s_main.py)
+For more details please refer to [AR-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/AR-SCR/v2s_main.py), [LT-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/LT-SCR/v2s_main.py) and [DM-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/DM-SCR/v2s_main.py)
 
 
 ### Reference

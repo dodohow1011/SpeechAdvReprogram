@@ -1,3 +1,7 @@
 AR-SCR/weight
 LT-SCR/weight
 DM-SCR/weight
+AR-SCR/__pycache__
+LT-SCR/__pycache__
+DM-SCR/__pycache__
+__pycache__
