@@ -62,10 +62,22 @@ For more details please refer to [AR-SCR](https://github.com/dodohow1011/SpeechA
 
 ### Reference
 
-- A Study of Low-Resource Speech Commands Recognition Based on Adversarial Reprogramming | [Paper](https://arxiv.org/pdf/2110.03894.pdf)
+- A Study of Low-Resource Speech Commands Recognition Based on Adversarial Reprogramming [Paper](https://arxiv.org/pdf/2110.03894.pdf)
 
-- Voice2Series: Reprogramming Acoustic Models for Time Series Classification
+```bib
 
+@misc{yen2021study,
+      title={A Study of Low-Resource Speech Commands Recognition based on Adversarial Reprogramming},
+      author={Hao Yen and Pin-Jui Ku and Chao-Han Huck Yang and Hu Hu and Sabato Marco Siniscalchi and Pin-Yu Chen and Yu Tsao},
+      year={2021},
+      eprint={2110.03894},
+      archivePrefix={arXiv},
+      primaryClass={eess.AS}
+}
+
+```
+
+- Voice2Series: Reprogramming Acoustic Models for Time Series Classification [Paper](https://arxiv.org/pdf/2106.09296.pdf)
 
 ```bib
 
