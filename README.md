@@ -1,7 +1,8 @@
 ## Adversarial Reprogramming on Speech Command Recognition
 
-### Environment
+<img src="https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/illustration.png" width="500">
 
+### Environment
 
 Tensorflow 2.2 (CUDA=10.0) and Kapre 0.2.0. 
 
