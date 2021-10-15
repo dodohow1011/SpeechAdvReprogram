@@ -62,7 +62,7 @@ For more details please refer to [AR-SCR](https://github.com/dodohow1011/SpeechA
 
 ### Reference
 
-- A Study of Low-Resource Speech Commands Recognition Based on Adversarial Reprogramming
+- A Study of Low-Resource Speech Commands Recognition Based on Adversarial Reprogramming | [Paper](https://arxiv.org/pdf/2110.03894.pdf)
 
 - Voice2Series: Reprogramming Acoustic Models for Time Series Classification
 
