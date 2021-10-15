@@ -60,7 +60,7 @@ For training and evaluating the three speech command recognition results.
 For more details please refer to [AR-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/AR-SCR/main.py), [LT-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/LT-SCR/main.py) and [DM-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/DM-SCR/main.py)
 
 
-#### Please consider to cite our paper if you use this code or find the pipeline related to your research. Thank you!
+#### Please consider to cite this work if you use the provided code or find the idea related to your research. Thank you!
 
 - A Study of Low-Resource Speech Commands Recognition Based on Adversarial Reprogramming [Paper](https://arxiv.org/pdf/2110.03894.pdf)
 
