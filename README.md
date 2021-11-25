@@ -56,8 +56,21 @@ For training and evaluating the three speech command recognition results.
 ./run_lt.sh
 ./run_dm.sh
 ```
-
 For more details please refer to [AR-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/AR-SCR/main.py), [LT-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/LT-SCR/main.py) and [DM-SCR](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/DM-SCR/main.py)
+
+(**Optional**) Note that in our default setting we use the random mapping strategy. To enable the similarity mapping,
+please modify the code at [utils.py](https://github.com/dodohow1011/SpeechAdvReprogram/blob/main/utils.py#L19) as followed:
+```python
+def multi_mapping(prob, source_num, mapping_num, target_num):
+    
+    similarity_mapping = True
+```
+And choose [lable_map](https://github.com/dodohow1011/SpeechAdvReprogram/blob/27db34e75f048903f296981d5c6e9a2d7a32f742/utils.py#L31-L33) according to your task. You can also see and check mapping results for each task by running the following command:
+```sh
+python AR-SCR/source_target_pairing.py
+python LT-SCR/source_target_pairing.py
+python DM-SCR/source_target_pairing.py
+```
 
 
 #### Please consider to cite this work if you use the provided code or find the idea related to your research. Thank you!
