@@ -16,18 +16,26 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 def multi_mapping(prob, source_num, mapping_num, target_num):
     
-    mt = mapping_num * target_num ##mt must smaller than source_num
-    label_map = np.zeros([source_num, mt]) ##[source_num, map_num*target_num]
-    label_map[0:mt, 0:mt] = np.eye(mt) ##[source_num, map_num*target_num]
-    map_prob = tf.matmul(prob, tf.constant(label_map, dtype=tf.float32)) ## [1, source_num] * [source_num, map_num*target_num] = [1, map_num*target_num]
-    final_prob = tf.reduce_mean(tf.reshape(map_prob, shape=[tf.shape(map_prob)[0], target_num, mapping_num]), axis=-1) ##[target_num]
-    # weight = np.zeros([source_num, target_num])
-    # cluster_labels = [[4,7], [20,24], [16,26,32], [6,13,31], [1,3,30], [9,19], [0,8], [17,18], [10,25], [5,11], [2,23], [21,27,35], [15,22,33], [28,29,34], [12,14]]
-    # cluster_labels = [[20,22,28], [4,8], [10,13], [14,23,27], [0,21], [12,18,29], [2,15,33], [6,7,31], [11,25,26], [1,5,30], [17,19,35], [9,16,32], [3,24,34]]
-    # for i, ls in enumerate(cluster_labels):
-    #     for num in ls:
-    #         weight[num][i] = 1
-    # final_prob = tf.matmul(prob, tf.constant(weight,dtype=tf.float32))
+    similarity_mapping = False
+    if not similairty_mapping:
+        mt = mapping_num * target_num ##mt must smaller than source_num
+        label_map = np.zeros([source_num, mt]) ##[source_num, map_num*target_num]
+        label_map[0:mt, 0:mt] = np.eye(mt) ##[source_num, map_num*target_num]
+        map_prob = tf.matmul(prob, tf.constant(label_map, dtype=tf.float32)) ## [1, source_num] * [source_num, map_num*target_num] = [1, map_num*target_num]
+        final_prob = tf.reduce_mean(tf.reshape(map_prob, shape=[tf.shape(map_prob)[0], target_num, mapping_num]), axis=-1) ##[target_num]
+
+    else:
+        # Use similarity mapping result.
+        # Note that you should choose the correct label_map according to the datast.
+        weight = np.zeros([source_num, target_num])
+        label_map = [[14,18], [2,13,35], [15,22,23], [6,21], [4,8], [26,27], [10,24], [19,29], [1,3], [30,31], [0,25,34], [12,16,32], [9,23], [17,28], [7,20], [5,11]] # AR-SCR mapping
+        #label_map = [[4,7], [20,24], [16,26,32], [6,13,31], [1,3,30], [9,19], [0,8], [17,18], [10,25], [5,11], [2,23], [21,27,35], [15,22,33], [28,29,34], [12,14]] # LT-SCR mapping
+        #label_map = [[20,22,28], [4,8], [10,13], [14,23,27], [0,21], [12,18,29], [2,15,33], [6,7,31], [11,25,26], [1,5,30], [17,19,35], [9,16,32], [3,24,34]] # DM-SCR mapping
+        for i, ls in enumerate(label_map):
+            for num in ls:
+                weight[num][i] = 1
+        final_prob = tf.matmul(prob, tf.constant(weight,dtype=tf.float32))
+
     return final_prob 
 
 def layer_output(in_feats, model, ly_name = "batch_normalization_6 ", n = 7):
