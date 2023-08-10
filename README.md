@@ -79,13 +79,11 @@ python DM-SCR/source_target_pairing.py
 
 ```bib
 
-@misc{yen2021study,
-      title={A Study of Low-Resource Speech Commands Recognition based on Adversarial Reprogramming},
-      author={Hao Yen and Pin-Jui Ku and Chao-Han Huck Yang and Hu Hu and Sabato Marco Siniscalchi and Pin-Yu Chen and Yu Tsao},
-      year={2021},
-      eprint={2110.03894},
-      archivePrefix={arXiv},
-      primaryClass={eess.AS}
+@article{yen2023neural,
+  title={Neural model reprogramming with similarity based mapping for low-resource spoken command classification},
+  author={Yen, Hao and Ku, Pin-Jui and Yang, Chao-Han Huck and Hu, Hu and Siniscalchi, Sabato Marco and Chen, Pin-Yu and Tsao, Yu},
+  journal={Proc. of Interspeech},
+  year={2023}
 }
 
 ```
